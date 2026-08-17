@@ -47,8 +47,13 @@ Esto crea la base `tienda`, sus dos tablas y datos de ejemplo.
 
 **2. Configurar la conexión**
 
-Los datos de conexión están en `src/main/java/Tienda/persistencia/DAO.java`
-(`USER`, `PASS`, `DATABASE`). Ajustalos a tu instalación de MySQL.
+Los datos de conexión se leen de variables de entorno. Si no las definís se usan
+los valores de desarrollo local (`localhost:3306`, base `tienda`, usuario `root`,
+contraseña vacía).
+
+```bash
+export DB_HOST=localhost:3306 DB_NAME=tienda DB_USER=root DB_PASS=tu_password
+```
 
 **3. Compilar y ejecutar**
 
@@ -57,14 +62,21 @@ mvn clean package
 ```
 
 ```bash
-java -jar target/Ejercicio1-1.0-SNAPSHOT.jar
+java -jar target/TiendaJDBC-1.0-SNAPSHOT.jar
 ```
+
+El build empaqueta el driver de MySQL dentro del jar, así que no hace falta
+agregar nada al classpath.
 
 ## Notas
 
 Proyecto hecho durante la Tecnicatura en Programación en UTN FRM. Usa JDBC directo
 en lugar de un ORM, así que las consultas SQL y el manejo de conexiones están
 escritos a mano.
+
+Las escrituras usan `PreparedStatement` con parámetros: la consulta viaja con
+marcadores `?` y los valores van aparte, de modo que el driver los trata como
+datos y no como parte del SQL.
 
 ---
 
